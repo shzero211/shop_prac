@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -36,7 +37,7 @@ private Long id;
 @JoinColumn(name = "member_id")
 private Member member;
 
-@OneToMany(mappedBy = "order",cascade = CascadeType.ALL,orphanRemoval = true)
+@OneToMany(mappedBy = "order",cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.LAZY)
 private List<OrderItem> orderItems=new ArrayList<>();
 
 private LocalDateTime orderDate;
