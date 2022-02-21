@@ -17,7 +17,7 @@ import lombok.Getter;
 @Entity
 @Getter
 @Setter
-public class OrderItem {
+public class OrderItem extends BaseTimeEntity {
 @Id
 @GeneratedValue
 @Column(name = "order_item_id")
@@ -35,7 +35,4 @@ private int orderPrice;
 
 private int count;
 
-private LocalDate regTime;
-
-private LocalDate updateTime ;
 }

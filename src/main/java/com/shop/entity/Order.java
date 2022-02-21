@@ -26,7 +26,7 @@ import lombok.Setter;
 @Table(name = "orders")
 @Getter
 @Setter
-public class Order {
+public class Order extends BaseTimeEntity {
 	
 @Id
 @GeneratedValue
@@ -44,9 +44,5 @@ private LocalDateTime orderDate;
 
 @Enumerated(EnumType.STRING)
 private OrderStatus orderStatus;
-
-private LocalDateTime regTime;
-
-private LocalDateTime updateTime;
 
 }
