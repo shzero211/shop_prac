@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 
-public interface ItemRepository extends JpaRepository<Item, Long> {
+public interface ItemRepository extends JpaRepository<Item, Long>,QuerydslPredicateExecutor<Item>,ItemRepositoryCustom {
 
 
 }
