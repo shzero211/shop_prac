@@ -1,6 +1,7 @@
 package com.shop.service;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 import javax.persistence.EntityNotFoundException;
@@ -10,6 +11,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.thymeleaf.util.StringUtils;
 
 import com.shop.dto.OrderDto;
 import com.shop.dto.OrderHistDto;
@@ -24,6 +26,7 @@ import com.shop.repository.ItemRepository;
 import com.shop.repository.ItemRepositoryCustom;
 import com.shop.repository.MemberRepository;
 import com.shop.repository.OrderRepository;
+
 
 import lombok.RequiredArgsConstructor;
 
@@ -67,5 +70,23 @@ public Page<OrderHistDto> getOrderList(String email,Pageable pageable){
 		orderHistDtos.add(orderHistDto);
 	}
 	return new PageImpl<OrderHistDto>(orderHistDtos,pageable,totalCount);
+}
+
+@Transactional(readOnly = true)
+public boolean validateOrder(Long orderId,String email) {
+	
+	Member curMember=memberRepository.findByEmail(email);
+	Order order=orderRepository.findById(orderId).orElseThrow(EntityNotFoundException::new);
+	Member savedMember=order.getMember();
+	
+	if(!StringUtils.equals(curMember.getEmail(), savedMember.getEmail())) {
+		return false;
+	}
+	return true;
+}
+
+public void cancelOrder(Long orderId) {
+	Order order=orderRepository.findById(orderId).orElseThrow(EntityNotFoundException::new);
+	order.cancelOrder();
 }
 }
